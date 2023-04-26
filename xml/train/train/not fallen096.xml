@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<annotation>
+	<size>
+		<width>590</width>
+		<height>332</height>
+		<depth>1</depth>
+	</size>
+	<object>
+		<name>2</name>
+		<bndbox>
+			<xmin>189</xmin>
+			<ymin>31</ymin>
+			<xmax>393</xmax>
+			<ymax>332</ymax>
+		</bndbox>
+	</object>
+</annotation>

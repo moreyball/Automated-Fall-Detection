@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<annotation>
+	<size>
+		<width>2160</width>
+		<height>2539</height>
+		<depth>1</depth>
+	</size>
+	<object>
+		<name>1</name>
+		<bndbox>
+			<xmin>98</xmin>
+			<ymin>950</ymin>
+			<xmax>296</xmax>
+			<ymax>2153</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>1</name>
+		<bndbox>
+			<xmin>260</xmin>
+			<ymin>1263</ymin>
+			<xmax>537</xmax>
+			<ymax>2105</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>1</name>
+		<bndbox>
+			<xmin>591</xmin>
+			<ymin>920</ymin>
+			<xmax>964</xmax>
+			<ymax>2165</ymax>
+		</bndbox>
+	</object>
+</annotation>
