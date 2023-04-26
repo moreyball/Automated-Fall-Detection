@@ -1,0 +1,25 @@
+<annotation>
+	<folder>my-project-name</folder>
+	<filename>fall23.png</filename>
+	<path>/my-project-name/fall23.png</path>
+	<source>
+		<database>Unspecified</database>
+	</source>
+	<size>
+		<width>912</width>
+		<height>742</height>
+		<depth>3</depth>
+	</size>
+	<object>
+		<name>fall</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>248</xmin>
+			<ymin>390</ymin>
+			<xmax>633</xmax>
+			<ymax>665</ymax>
+		</bndbox>
+	</object>
+</annotation>

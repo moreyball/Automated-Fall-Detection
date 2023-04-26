@@ -1,0 +1,37 @@
+<annotation>
+	<folder>my-project-name</folder>
+	<filename>stand (62).png</filename>
+	<path>/my-project-name/stand (62).png</path>
+	<source>
+		<database>Unspecified</database>
+	</source>
+	<size>
+		<width>702</width>
+		<height>892</height>
+		<depth>3</depth>
+	</size>
+	<object>
+		<name>stand</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>141</xmin>
+			<ymin>247</ymin>
+			<xmax>372</xmax>
+			<ymax>765</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>stand</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>397</xmin>
+			<ymin>258</ymin>
+			<xmax>604</xmax>
+			<ymax>736</ymax>
+		</bndbox>
+	</object>
+</annotation>
