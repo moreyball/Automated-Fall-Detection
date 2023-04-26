@@ -37,7 +37,11 @@ def w_data(writer, xml_path):
             writer.writerow(value)
 
 
-def open_csv(xml_path1, xml_path2):
+def train():
+    # PATH CONFIGURATION
+    xml_path1 = "xml/train/train"
+    xml_path2 = "xml/train/val"
+
     with open("annotations/train.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
 
@@ -46,9 +50,21 @@ def open_csv(xml_path1, xml_path2):
         w_data(writer, xml_path2)
 
 
-if __name__ == "__main__":
+def test():
     # PATH CONFIGURATION
-    xml_path1 = "xml/train"
-    xml_path2 = "xml/val"
+    xml_path1 = "xml/test/fall"
+    xml_path2 = "xml/test/sit"
+    xml_path3 = "xml/test/stand"
 
-    open_csv(xml_path1, xml_path2)
+    with open("annotations/test.csv", "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+
+        w_header(writer)
+        w_data(writer, xml_path1)
+        w_data(writer, xml_path2)
+        w_data(writer, xml_path3)
+
+
+if __name__ == "__main__":
+    train()
+    test()

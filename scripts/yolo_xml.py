@@ -88,43 +88,55 @@ def write_xml(width, height, depth, objects, xml_path):
     tree.write(xml_path)
 
 
-if __name__ == "__main__":
-    # PATH CONFIGURATION
-    text_path1 = "fall_dataset/labels/train"
-    jpg_path1 = "fall_dataset/images/train"
-    xml_path1 = "xml/train"
-    
-    text_path2 = "fall_dataset/labels/val"
-    jpg_path2 = "fall_dataset/images/val"
-    xml_path2 = "xml/val"
-
-    for file in os.listdir(text_path1):
-        file_path = os.path.join(text_path1, file)
+def txt_xml_main(text_path, jpg_path, xml_path):
+    for file in os.listdir(text_path):
+        file_path = os.path.join(text_path, file)
         lines = read_file(file_path)
 
-        txtfile = os.path.join(text_path1, file)
-        jpgfile = os.path.join(jpg_path1, os.path.splitext(file)[0] + ".jpg")
-        xmlfile = os.path.join(xml_path1, os.path.splitext(file)[0] + ".xml")
+        jpgfile = os.path.join(jpg_path, os.path.splitext(file)[0] + ".jpg")
+        xmlfile = os.path.join(xml_path, os.path.splitext(file)[0] + ".xml")
 
-        objects = store_objects(lines, jpgfile)
-        width, height = get_image_size(jpgfile)
-        depth = get_image_depth(jpgfile)
-        write_xml(width, height, depth, objects, xmlfile)
-        format_xml(xmlfile)
-        
-    for file in os.listdir(text_path2):
-        file_path = os.path.join(text_path2, file)
-        lines = read_file(file_path)
-
-        txtfile = os.path.join(text_path2, file)
-        jpgfile = os.path.join(jpg_path2, os.path.splitext(file)[0] + ".jpg")
-        xmlfile = os.path.join(xml_path2, os.path.splitext(file)[0] + ".xml")
-        if(os.path.exists(jpgfile)):
+        if os.path.exists(jpgfile):
             pass
         else:
-            jpgfile = os.path.join(jpg_path2, os.path.splitext(file)[0] + ".png")
+            jpgfile = os.path.join(jpg_path, os.path.splitext(file)[0] + ".png")
+        if os.path.exists(jpgfile):
+            pass
+        else:
+            jpgfile = os.path.join(jpg_path, os.path.splitext(file)[0] + ".jpeg")
+
         objects = store_objects(lines, jpgfile)
         width, height = get_image_size(jpgfile)
         depth = get_image_depth(jpgfile)
+
         write_xml(width, height, depth, objects, xmlfile)
         format_xml(xmlfile)
+
+
+if __name__ == "__main__":
+    # PATH CONFIGURATION
+    text_path1 = "fall_dataset/train/labels/train"
+    jpg_path1 = "fall_dataset/train/images/train"
+    xml_path1 = "xml/train/train"
+
+    text_path2 = "fall_dataset/train/labels/val"
+    jpg_path2 = "fall_dataset/train/images/val"
+    xml_path2 = "xml/train/val"
+
+    text_path3 = "fall_dataset/test/labels/fall"
+    jpg_path3 = "fall_dataset/test/images/fall"
+    xml_path3 = "xml/test/fall"
+
+    text_path4 = "fall_dataset/test/labels/sit"
+    jpg_path4 = "fall_dataset/test/images/sit"
+    xml_path4 = "xml/test/sit"
+
+    text_path5 = "fall_dataset/test/labels/stand"
+    jpg_path5 = "fall_dataset/test/images/stand"
+    xml_path5 = "xml/test/stand"
+
+    txt_xml_main(text_path1, jpg_path1, xml_path1)
+    txt_xml_main(text_path2, jpg_path2, xml_path2)
+    txt_xml_main(text_path3, jpg_path3, xml_path3)
+    txt_xml_main(text_path4, jpg_path4, xml_path4)
+    txt_xml_main(text_path5, jpg_path5, xml_path5)
