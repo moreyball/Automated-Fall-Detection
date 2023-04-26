@@ -1,9 +1,0 @@
-item {
-    id: 0
-    name: 'person'
-}
-
-item {
-    id: 1
-    name: 'non-person'
-}
