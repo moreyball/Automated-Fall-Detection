@@ -1,14 +1,9 @@
-person {
-    id: 0
-    name: 'fall detected'
-}
-
-person {
+item {
     id: 1
-    name: 'walk'
+    name: 'person'
 }
 
-person {
+item {
     id: 2
-    name: 'sit'
+    name: 'non-person'
 }
