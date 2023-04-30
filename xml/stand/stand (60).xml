@@ -1,13 +1,13 @@
 <annotation>
 	<folder>my-project-name</folder>
-	<filename>stand (60).png</filename>
-	<path>/my-project-name/stand (60).png</path>
+	<filename>stand (60).jpg</filename>
+	<path>/my-project-name/stand (60).jpg</path>
 	<source>
 		<database>Unspecified</database>
 	</source>
 	<size>
-		<width>3456</width>
-		<height>4608</height>
+		<width>300</width>
+		<height>240</height>
 		<depth>3</depth>
 	</size>
 	<object>
@@ -16,10 +16,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>1224</xmin>
-			<ymin>87</ymin>
-			<xmax>2436</xmax>
-			<ymax>4095</ymax>
+			<xmin>107</xmin>
+			<ymin>44</ymin>
+			<xmax>134</xmax>
+			<ymax>100</ymax>
 		</bndbox>
 	</object>
 </annotation>

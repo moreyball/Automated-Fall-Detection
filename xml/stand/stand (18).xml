@@ -6,8 +6,8 @@
 		<database>Unspecified</database>
 	</source>
 	<size>
-		<width>2160</width>
-		<height>3840</height>
+		<width>300</width>
+		<height>240</height>
 		<depth>3</depth>
 	</size>
 	<object>
@@ -16,22 +16,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>223</xmin>
-			<ymin>227</ymin>
-			<xmax>805</xmax>
-			<ymax>3194</ymax>
-		</bndbox>
-	</object>
-	<object>
-		<name>sit</name>
-		<pose>Unspecified</pose>
-		<truncated>0</truncated>
-		<difficult>0</difficult>
-		<bndbox>
-			<xmin>978</xmin>
-			<ymin>1010</ymin>
-			<xmax>2125</xmax>
-			<ymax>3494</ymax>
+			<xmin>136</xmin>
+			<ymin>82</ymin>
+			<xmax>215</xmax>
+			<ymax>237</ymax>
 		</bndbox>
 	</object>
 </annotation>

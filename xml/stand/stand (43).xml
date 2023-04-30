@@ -1,13 +1,13 @@
 <annotation>
 	<folder>my-project-name</folder>
-	<filename>stand (43).JPG</filename>
-	<path>/my-project-name/stand (43).JPG</path>
+	<filename>stand (43).jpg</filename>
+	<path>/my-project-name/stand (43).jpg</path>
 	<source>
 		<database>Unspecified</database>
 	</source>
 	<size>
-		<width>4032</width>
-		<height>3024</height>
+		<width>300</width>
+		<height>240</height>
 		<depth>3</depth>
 	</size>
 	<object>
@@ -16,10 +16,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>2086</xmin>
-			<ymin>1118</ymin>
-			<xmax>2402</xmax>
-			<ymax>2952</ymax>
+			<xmin>67</xmin>
+			<ymin>39</ymin>
+			<xmax>132</xmax>
+			<ymax>216</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -28,10 +28,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>811</xmin>
-			<ymin>1082</ymin>
-			<xmax>1184</xmax>
-			<ymax>2924</ymax>
+			<xmin>127</xmin>
+			<ymin>45</ymin>
+			<xmax>158</xmax>
+			<ymax>199</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -40,10 +40,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>1270</xmin>
-			<ymin>1319</ymin>
-			<xmax>1707</xmax>
-			<ymax>2960</ymax>
+			<xmin>154</xmin>
+			<ymin>38</ymin>
+			<xmax>188</xmax>
+			<ymax>227</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -52,10 +52,22 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>1571</xmin>
-			<ymin>1311</ymin>
-			<xmax>2000</xmax>
-			<ymax>3024</ymax>
+			<xmin>183</xmin>
+			<ymin>38</ymin>
+			<xmax>219</xmax>
+			<ymax>230</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>stand</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>215</xmin>
+			<ymin>34</ymin>
+			<xmax>255</xmax>
+			<ymax>231</ymax>
 		</bndbox>
 	</object>
 </annotation>
