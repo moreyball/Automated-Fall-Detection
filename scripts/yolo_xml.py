@@ -95,16 +95,7 @@ def txt_xml_main(path):
 
         jpgfile = os.path.join(path, os.path.splitext(file)[0] + ".jpg")
         xmlfile = os.path.join(path, os.path.splitext(file)[0] + ".xml")
-
-        if os.path.exists(jpgfile):
-            pass
-        else:
-            jpgfile = os.path.join(path, os.path.splitext(file)[0] + ".png")
-        if os.path.exists(jpgfile):
-            pass
-        else:
-            jpgfile = os.path.join(path, os.path.splitext(file)[0] + ".jpeg")
-
+        
         objects = store_objects(lines, jpgfile)
         width, height = get_image_size(jpgfile)
         depth = get_image_depth(jpgfile)
