@@ -15,7 +15,7 @@ def get_image_depth(image_path):
 
 
 def read_file(file_path):
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding='ISO-8859-1') as f:
         lines = f.readlines()
     return lines
 
@@ -57,13 +57,13 @@ def store_objects(lines, image_path):
 
 
 def format_xml(file_path):
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding='ISO-8859-1') as f:
         xml_data = f.read()
 
     dom = xml.dom.minidom.parseString(xml_data)
     xml_formatted = dom.toprettyxml(indent="\t")
 
-    with open(file_path, "w") as f:
+    with open(file_path, "w", encoding='ISO-8859-1') as f:
         f.write(xml_formatted)
 
 
