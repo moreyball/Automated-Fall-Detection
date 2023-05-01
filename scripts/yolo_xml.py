@@ -90,18 +90,19 @@ def write_xml(width, height, depth, objects, path):
 
 def txt_xml_main(path):
     for file in os.listdir(path):
-        file_path = os.path.join(path, file)
-        lines = read_file(file_path)
+        if file.endswith(".txt"):
+            file_path = os.path.join(path, file)
+            lines = read_file(file_path)
 
-        jpgfile = os.path.join(path, os.path.splitext(file)[0] + ".jpg")
-        xmlfile = os.path.join(path, os.path.splitext(file)[0] + ".xml")
-        
-        objects = store_objects(lines, jpgfile)
-        width, height = get_image_size(jpgfile)
-        depth = get_image_depth(jpgfile)
+            jpgfile = os.path.join(path, os.path.splitext(file)[0] + ".jpg")
+            xmlfile = os.path.join(path, os.path.splitext(file)[0] + ".xml")
+            
+            objects = store_objects(lines, jpgfile)
+            width, height = get_image_size(jpgfile)
+            depth = get_image_depth(jpgfile)
 
-        write_xml(width, height, depth, objects, xmlfile)
-        format_xml(xmlfile)
+            write_xml(width, height, depth, objects, xmlfile)
+            format_xml(xmlfile)
 
 
 if __name__ == "__main__":
