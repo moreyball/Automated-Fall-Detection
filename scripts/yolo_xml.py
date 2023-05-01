@@ -110,7 +110,7 @@ if __name__ == "__main__":
     path1 = "images/test/fall"
     path2 = "images/test/sit"
     path3 = "images/test/stand"
-    path4 = "images/test"
+    path4 = "images/"
 
     txt_xml_main(path1)
     txt_xml_main(path2)
