@@ -107,12 +107,8 @@ def txt_xml_main(path):
 
 if __name__ == "__main__":
     # PATH CONFIGURATION
-    path1 = "images/test/fall"
-    path2 = "images/test/sit"
-    path3 = "images/test/stand"
-    path4 = "images/"
+    path1 = "images/test1"
+    path2 = "images/"
 
     txt_xml_main(path1)
     txt_xml_main(path2)
-    txt_xml_main(path3)
-    txt_xml_main(path4)
