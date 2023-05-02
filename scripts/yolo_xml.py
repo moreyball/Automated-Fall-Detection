@@ -111,7 +111,7 @@ def txt_pascal_voc_main(path):
 if __name__ == "__main__":
     # PATH CONFIGURATION
     path1 = "images/test1"
-    path2 = "images/"
+    path2 = "images/train"
 
     txt_pascal_voc_main(path1)
     txt_pascal_voc_main(path2)
