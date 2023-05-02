@@ -44,8 +44,16 @@ def store_objects(lines, image_path):
     width, height = get_image_size(image_path)
     for line in lines:
         parts = line.strip().split(" ")
+        if parts[0] == "1":
+            obj_class = "fall"
+        elif parts[0] == "2":
+            obj_class = "stand"
+        elif parts[0] == "3":
+            obj_class = "sit"
+        else:
+            obj_class = "unknown"
         obj = {
-            "class": parts[0],
+            "class": obj_class,        
             "xmin": calc_xmin(parts[1], parts[3], width),
             "ymin": calc_ymin(parts[2], parts[4], height),
             "xmax": calc_xmax(parts[1], parts[3], width),
