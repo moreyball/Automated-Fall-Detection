@@ -1,114 +1,125 @@
-import xml.etree.ElementTree as ET
-from PIL import Image
 import os
-import xml.dom.minidom
+import re
+from PIL import Image
 
+folder_holding_yolo_files = input("Enter the path to the yolo files: ").replace("'", "").strip()
+yolo_class_list_file = input("Enter the path to the file that has the yolo classes (typically classes.txt): ").strip()
 
-def get_image_size(image_path):
-    img = Image.open(image_path)
-    return img.size
+# Get a list of all the classes used in the yolo format
+with open(yolo_class_list_file) as f:
+    yolo_classes = f.readlines()
+array_of_yolo_classes = [x.strip() for x in yolo_classes]
 
+# Description of Yolo Format values
+# 15 0.448743 0.529142 0.051587 0.021081
+# class_number x_yolo y_yolo yolo_width yolo_height
 
-def get_image_depth(image_path):
-    img = Image.open(image_path)
-    return len(img.mode.split())
+def is_number(n):
+  try:
+    float(n)
+    return True
+  except ValueError:
+    return False
 
+os.chdir(folder_holding_yolo_files)
 
-def read_file(file_path):
-    with open(file_path, "r", encoding='ISO-8859-1') as f:
-        lines = f.readlines()
-    return lines
+if not os.path.exists(folder_holding_yolo_files + os.sep + 'XML'):
+  # If an XML folder does not already exist, make one
+  os.mkdir('XML')
 
+for each_yolo_file in os.listdir(folder_holding_yolo_files):
+  if each_yolo_file.endswith("txt"):
+    the_file = open(each_yolo_file, 'r')
+    all_lines = the_file.readlines()
+    image_name = each_yolo_file
 
-def calc_xmin(v1, v3, width):
-    xmin = int((float(v1) - float(v3) / 2) * width)
-    return xmin
+    # Check to see if there is an image that matches the txt file
+    if os.path.exists(each_yolo_file.replace('txt', 'jpeg')):
+      image_name = each_yolo_file.replace('txt', 'jpeg')
+    if os.path.exists(each_yolo_file.replace('txt', 'jpg')):
+      image_name = each_yolo_file.replace('txt', 'jpg')
+    if os.path.exists(each_yolo_file.replace('txt', 'png')):
+      image_name = each_yolo_file.replace('txt', 'png')
 
+    if not image_name == each_yolo_file:
+      # If the image name is the same as the yolo filename
+      # then we did NOT find an image that matches, and we will skip this code block
+      orig_img = Image.open(image_name) # open the image
+      image_width = orig_img.width
+      image_height = orig_img.height
 
-def calc_ymin(v2, v4, height):
-    ymin = int((float(v2) - float(v4) / 2) * height)
-    return ymin
+      # Start the XML file
+      with open('XML' + os.sep + each_yolo_file.replace('txt', 'xml'), 'w') as f:
+        f.write('<annotation>\n')
+        f.write('\t<folder>XML</folder>\n')
+        f.write('\t<filename>' + image_name + '</filename>\n')
+        f.write('\t<path>' + os.getcwd() + os.sep + image_name + '</path>\n')
+        f.write('\t<source>\n')
+        f.write('\t\t<database>Unknown</database>\n')
+        f.write('\t</source>\n')
+        f.write('\t<size>\n')
+        f.write('\t\t<width>' + str(image_width) + '</width>\n')
+        f.write('\t\t<height>' + str(image_height) + '</height>\n')
+        f.write('\t\t<depth>3</depth>\n') # assuming a 3 channel color image (RGB)
+        f.write('\t</size>\n')
+        f.write('\t<segmented>0</segmented>\n')
+      
+        for each_line in all_lines:
+          # regex to find the numbers in each line of the text file
+          yolo_array = re.split("\s", each_line.rstrip()) # remove any extra space from the end of the line
 
+          # initalize the variables
+          class_number = 0
+          x_yolo = 0.0
+          y_yolo = 0.0
+          yolo_width = 0.0
+          yolo_height = 0.0
+          yolo_array_contains_only_digits = True
 
-def calc_xmax(v1, v3, width):
-    xmax = int((float(v1) + float(v3) / 2) * width)
-    return xmax
-
-
-def calc_ymax(v2, v4, height):
-    ymax = int((float(v2) + float(v4) / 2) * height)
-    return ymax
-
-
-def store_objects(lines, image_path):
-    objects = []
-    width, height = get_image_size(image_path)
-    for line in lines:
-        parts = line.strip().split(" ")
-        obj = {
-            "class": parts[0],
-            "xmin": calc_xmin(parts[1], parts[3], width),
-            "ymin": calc_ymin(parts[2], parts[4], height),
-            "xmax": calc_xmax(parts[1], parts[3], width),
-            "ymax": calc_ymax(parts[2], parts[4], height),
-        }
-        objects.append(obj)
-    return objects
-
-
-def format_xml(file_path):
-    with open(file_path, "r", encoding='ISO-8859-1') as f:
-        xml_data = f.read()
-
-    dom = xml.dom.minidom.parseString(xml_data)
-    xml_formatted = dom.toprettyxml(indent="\t")
-
-    with open(file_path, "w", encoding='ISO-8859-1') as f:
-        f.write(xml_formatted)
-
-
-def write_xml(width, height, depth, objects, path):
-    root = ET.Element("annotation")
-    size = ET.SubElement(root, "size")
-    ET.SubElement(size, "width").text = str(width)
-    ET.SubElement(size, "height").text = str(height)
-    ET.SubElement(size, "depth").text = str(depth)
-
-    for obj in objects:
-        object_elem = ET.SubElement(root, "object")
-        ET.SubElement(object_elem, "name").text = obj["class"]
-
-        bbox = ET.SubElement(object_elem, "bndbox")
-        ET.SubElement(bbox, "xmin").text = str(obj["xmin"])
-        ET.SubElement(bbox, "ymin").text = str(obj["ymin"])
-        ET.SubElement(bbox, "xmax").text = str(obj["xmax"])
-        ET.SubElement(bbox, "ymax").text = str(obj["ymax"])
-
-    tree = ET.ElementTree(root)
-    tree.write(path)
-
-
-def txt_xml_main(path):
-    for file in os.listdir(path):
-        if file.endswith(".txt"):
-            file_path = os.path.join(path, file)
-            lines = read_file(file_path)
-
-            jpgfile = os.path.join(path, os.path.splitext(file)[0] + ".jpg")
-            xmlfile = os.path.join(path, os.path.splitext(file)[0] + ".xml")
+          # make sure the array has the correct number of items
+          if len(yolo_array) == 5:
+            for each_value in yolo_array:
+              # If a value is not a number, then the format is not correct, return false
+              if not is_number(each_value):
+                yolo_array_contains_only_digits = False
             
-            objects = store_objects(lines, jpgfile)
-            width, height = get_image_size(jpgfile)
-            depth = get_image_depth(jpgfile)
+            if yolo_array_contains_only_digits:
+              # assign the variables
+              class_number = int(yolo_array[0])
+              object_name = array_of_yolo_classes[class_number]
+              x_yolo = float(yolo_array[1])
+              y_yolo = float(yolo_array[2])
+              yolo_width = float(yolo_array[3])
+              yolo_height = float(yolo_array[4])
 
-            write_xml(width, height, depth, objects, xmlfile)
-            format_xml(xmlfile)
+              # Convert Yolo Format to Pascal VOC format
+              box_width = yolo_width * image_width
+              box_height = yolo_height * image_height
+              x_min = str(int(x_yolo * image_width - (box_width / 2)))
+              y_min = str(int(y_yolo * image_height - (box_height / 2)))
+              x_max = str(int(x_yolo * image_width + (box_width / 2)))
+              y_max = str(int(y_yolo * image_height + (box_height / 2)))
 
+              # write each object to the file
+              f.write('\t<object>\n')
+              f.write('\t\t<name>' + object_name + '</name>\n')
+              f.write('\t\t<pose>Unspecified</pose>\n')
+              f.write('\t\t<truncated>0</truncated>\n')
+              f.write('\t\t<difficult>0</difficult>\n')
+              f.write('\t\t<bndbox>\n')
+              f.write('\t\t\t<xmin>' + x_min + '</xmin>\n')
+              f.write('\t\t\t<ymin>' + y_min + '</ymin>\n')
+              f.write('\t\t\t<xmax>' + x_max + '</xmax>\n')
+              f.write('\t\t\t<ymax>' + y_max + '</ymax>\n')
+              f.write('\t\t</bndbox>\n')
+              f.write('\t</object>\n')
 
-if __name__ == "__main__":
-    # PATH CONFIGURATION
-    path1 = "images/test1"
-    path2 = "images/"
+        # Close the annotation tag once all the objects have been written to the file
+        f.write('</annotation>\n')
+        f.close() # Close the file
 
-    txt_xml_main(path1)
-    txt_xml_main(path2)
+# Check to make sure the sprite file is now in the folder
+if os.path.exists("XML"):
+  print("Conversion complete")
+else:
+  print("There was a problem converting the files")
