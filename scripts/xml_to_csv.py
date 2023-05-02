@@ -40,7 +40,7 @@ def xml_to_csv(path):
                 int(member[4][3].text),
             )
             xml_list.append(value)
-    column_name = ["width", "height", "class", "xmin", "ymin", "xmax", "ymax"]
+    column_name = ["filename","width", "height", "class", "xmin", "ymin", "xmax", "ymax"]
     xml_df = pd.DataFrame(xml_list, columns=column_name)
     return xml_df
 
