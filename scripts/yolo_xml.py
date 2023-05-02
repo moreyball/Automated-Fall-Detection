@@ -69,6 +69,8 @@ def format_xml(file_path):
 
 def write_xml(width, height, depth, objects, path):
     root = ET.Element("annotation")
+    filename = ET.SubElement("filename")
+    ET.SubElement(filename).text = os.path.basename(path)
     size = ET.SubElement(root, "size")
     ET.SubElement(size, "width").text = str(width)
     ET.SubElement(size, "height").text = str(height)
