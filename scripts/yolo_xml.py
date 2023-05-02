@@ -107,7 +107,7 @@ def txt_xml_main(path):
 
 if __name__ == "__main__":
     # PATH CONFIGURATION
-    path1 = "images/test1"
+    path1 = "images/test"
     path2 = "images/"
 
     txt_xml_main(path1)
