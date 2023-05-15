@@ -1,0 +1,2 @@
+fall_recognition_model_2 filter=lfs diff=lfs merge=lfs -text
+fall_recognition_model_2.zip filter=lfs diff=lfs merge=lfs -text
