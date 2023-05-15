@@ -3,7 +3,6 @@ from PIL import Image
 import os
 import xml.dom.minidom
 
-
 def get_image_size(image_path):
     img = Image.open(image_path)
     return img.size
@@ -45,8 +44,16 @@ def store_objects(lines, image_path):
     width, height = get_image_size(image_path)
     for line in lines:
         parts = line.strip().split(" ")
+        if parts[0] == "0":
+            obj_class = "fall"
+        elif parts[0] == "1":
+            obj_class = "stand"
+        elif parts[0] == "2":
+            obj_class = "sit"
+        else:
+            obj_class = "unknown"
         obj = {
-            "class": parts[0],
+            "class": obj_class,        
             "xmin": calc_xmin(parts[1], parts[3], width),
             "ymin": calc_ymin(parts[2], parts[4], height),
             "xmax": calc_xmax(parts[1], parts[3], width),
@@ -67,28 +74,35 @@ def format_xml(file_path):
         f.write(xml_formatted)
 
 
-def write_xml(width, height, depth, objects, path):
+def write_pascal_voc_xml(image_path, objects, xml_path):
+    image_name = os.path.basename(image_path)
     root = ET.Element("annotation")
+    ET.SubElement(root, "folder").text = os.path.dirname(image_path)
+    ET.SubElement(root, "filename").text = image_name
+    ET.SubElement(root, "path").text = image_path
     size = ET.SubElement(root, "size")
+    width, height = get_image_size(image_path)
     ET.SubElement(size, "width").text = str(width)
     ET.SubElement(size, "height").text = str(height)
-    ET.SubElement(size, "depth").text = str(depth)
-
+    ET.SubElement(size, "depth").text = str(get_image_depth(image_path))
+    ET.SubElement(root, "segmented").text = "0"
     for obj in objects:
-        object_elem = ET.SubElement(root, "object")
-        ET.SubElement(object_elem, "name").text = obj["class"]
-
-        bbox = ET.SubElement(object_elem, "bndbox")
+        obj_elem = ET.SubElement(root, "object")
+        ET.SubElement(obj_elem, "name").text = obj["class"]
+        ET.SubElement(obj_elem, "pose").text = "Unspecified"
+        ET.SubElement(obj_elem, "truncated").text = "0"
+        ET.SubElement(obj_elem, "difficult").text = "0"
+        bbox = ET.SubElement(obj_elem, "bndbox")
         ET.SubElement(bbox, "xmin").text = str(obj["xmin"])
         ET.SubElement(bbox, "ymin").text = str(obj["ymin"])
         ET.SubElement(bbox, "xmax").text = str(obj["xmax"])
         ET.SubElement(bbox, "ymax").text = str(obj["ymax"])
-
     tree = ET.ElementTree(root)
-    tree.write(path)
+    tree.write(xml_path)
+    format_xml(xml_path)
 
 
-def txt_xml_main(path):
+def txt_pascal_voc_main(path):
     for file in os.listdir(path):
         if file.endswith(".txt"):
             file_path = os.path.join(path, file)
@@ -98,17 +112,14 @@ def txt_xml_main(path):
             xmlfile = os.path.join(path, os.path.splitext(file)[0] + ".xml")
             
             objects = store_objects(lines, jpgfile)
-            width, height = get_image_size(jpgfile)
-            depth = get_image_depth(jpgfile)
 
-            write_xml(width, height, depth, objects, xmlfile)
-            format_xml(xmlfile)
-
+            write_pascal_voc_xml(jpgfile, objects, xmlfile)
+            
 
 if __name__ == "__main__":
     # PATH CONFIGURATION
     path1 = "images/test"
-    path2 = "images/"
+    path2 = "images/train"
 
-    txt_xml_main(path1)
-    txt_xml_main(path2)
+    txt_pascal_voc_main(path1)
+    txt_pascal_voc_main(path2)
